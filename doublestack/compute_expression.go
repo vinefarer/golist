@@ -1,18 +1,20 @@
 package main
 
 import (
+	"github.com/vinefarer/golist"
 	"os"
 
-	"github.com/golang/golist"
 )
 
-func evaluate() int {
+func evaluate() interface{} {
 	ops := golist.InitStack()
 	val := golist.InitStack()
-	for {
+	for i := 0; i < len(os.Args); i++ {
 		op := os.Args[i]
 
 	}
+
+	return val.Pop()
 }
 
 func main() {

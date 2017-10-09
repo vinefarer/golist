@@ -52,6 +52,14 @@ func (s *Stack) Len() int {
 	return s.len
 }
 
+func (s *Stack) GetBottomVal() interface{} {
+	return s.root.next.value
+}
+
+func (s *Stack) GetTopVal() interface{} {
+	return s.root.prev.value
+}
+
 func (s *Stack) Push(v interface{}) *Stack {
 	e := InitElement(v)
 	e.next = s.root.next
