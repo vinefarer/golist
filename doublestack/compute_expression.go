@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 	"bufio"
-	"github.com/vinefarer/golist"
+	//"github.com/vinefarer/golist"
 )
 
 var (
@@ -15,18 +15,22 @@ var (
 )
 
 func evaluate(str string) interface{} {
-	ops := golist.InitStack()
-	val := golist.InitStack()
+	//ops := golist.InitStack()
+	//val := golist.InitStack()
 
-	return val.Pop()
+	return str
 }
 
 func main() {
 	fmt.Println("Please input your expression : ")
+
 	inputReader = bufio.NewReader(os.Stdin)
 	inputValue, err = inputReader.ReadString('\n')
-	if nil == err {
-		res = evaluate(inputValue)
-		fmt.Println("The result is : ", res)
+	if err != nil {
+		fmt.Println("There were errors reading, exiting program.")
+		return
 	}
+
+	res = evaluate(inputValue)
+	fmt.Println("The result is : ", res)
 }
