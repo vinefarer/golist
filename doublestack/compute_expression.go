@@ -1,22 +1,32 @@
 package main
 
 import (
-	"github.com/vinefarer/golist"
+	"fmt"
 	"os"
-
+	"bufio"
+	"github.com/vinefarer/golist"
 )
 
-func evaluate() interface{} {
+var (
+	inputReader *bufio.Reader
+	inputValue string
+	err error
+	res interface{}
+)
+
+func evaluate(str string) interface{} {
 	ops := golist.InitStack()
 	val := golist.InitStack()
-	for i := 0; i < len(os.Args); i++ {
-		op := os.Args[i]
-
-	}
 
 	return val.Pop()
 }
 
 func main() {
-
+	fmt.Println("Please input your expression : ")
+	inputReader = bufio.NewReader(os.Stdin)
+	inputValue, err = inputReader.ReadString('\n')
+	if nil == err {
+		res = evaluate(inputValue)
+		fmt.Println("The result is : ", res)
+	}
 }
