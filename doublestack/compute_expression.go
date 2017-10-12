@@ -1,58 +1,72 @@
 package main
 
 import (
-	"fmt"
+	"github.com/vinefarer/golist"
 	"os"
 	"bufio"
-	"github.com/vinefarer/golist"
+	"fmt"
 )
 
 var (
 	inputReader *bufio.Reader
-	inputValue byte
-	err error
-	res interface{}
+	inputValue  []byte
+	err 		error
+	ops			rune
+	val    		byte
 )
 
-//func evaluate(str string) interface{} {
-//	ops := golist.InitStack()
-//	val := golist.InitStack()
-//
-//	return str
-//}
-
 func main() {
-	fmt.Println("Please input your expression : ")
+	fmt.Println("Please input your compute expression :")
 	inputReader = bufio.NewReader(os.Stdin)
-	ops := golist.InitStack()
-	val := golist.InitStack()
-	for {
-		inputValue, err = inputReader.ReadByte()
-		if err != nil {
-			fmt.Println("There were errors reading, exiting program.")
-			break
-		}
-		switch inputValue {
-		case '(':
-		case '+': fallthrough
-		case '-': fallthrough
-		case '*': fallthrough
-		case '/': ops.Push(inputValue)
-		case ')': {
-			op := ops.Pop()
-			res := val.Pop()
-			switch op {
-			case '+': res = val.Pop() + res
-			case '-': res = val.Pop() - res
-			case '*': res = val.Pop() * res
-			case '/': res = val.Pop() / res
-			}
-		}
-		default: val.Push(inputValue)
-		}
-		if inputValue == '\n' {
-			break
-		}
-		fmt.Printf("The result is : %s\n", string(inputValue))
+	inputValue, err = inputReader.ReadBytes('\n')
+	if err != nil {
+		fmt.Println("There were errors reading, exiting program.")
+		return
 	}
+
+	opslist := golist.InitStack()
+	vallist := golist.InitStack()
+
+	for _, e := range inputValue {
+		if e == '\n' || e == '\r' {
+			break
+		}
+		fmt.Printf("e = %s\n", string(e))
+		switch e {
+		case ' ':
+		case '(':
+		case '+':
+			fallthrough
+		case '-':
+			fallthrough
+		case '*':
+			fallthrough
+		case '/':
+			opslist.Push(rune(e))
+		case ')':
+			ops = opslist.Pop().(rune)
+			val = vallist.Pop().(byte)
+			switch ops {
+			case '+':
+				val = vallist.Pop().(byte) + val
+			case '-':
+				val = vallist.Pop().(byte) - val
+			case '*':
+				val = vallist.Pop().(byte) * val
+			case '/':
+				val = vallist.Pop().(byte) / val
+			default:
+				fmt.Println("Wrong operation!")
+			}
+			vallist.Push(val)
+		default:
+			vallist.Push(e)
+		}
+		fmt.Println("---------------")
+		opslist.Print()
+		vallist.Print()
+		fmt.Println("---------------")
+	}
+
+	fmt.Printf("The result is : %d\n", val)
 }
