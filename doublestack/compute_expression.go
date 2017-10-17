@@ -12,8 +12,7 @@ var (
 	inputReader *bufio.Reader
 	inputValue  []byte
 	err         error
-	ops         rune
-	val         byte
+	ops, val    rune
 )
 
 func main() {
@@ -46,28 +45,29 @@ func main() {
 			opslist.Push(rune(e))
 		case ')':
 			ops = opslist.Pop().(rune)
-			val = vallist.Pop().(byte)
+			val = vallist.Pop().(rune)
+
 			switch ops {
 			case '+':
-				val = vallist.Pop().(byte) + val
+				val = vallist.Pop().(rune) + val
 			case '-':
-				val = vallist.Pop().(byte) - val
+				val = vallist.Pop().(rune) - val
 			case '*':
-				val = vallist.Pop().(byte) * val
+				val = vallist.Pop().(rune) * val
 			case '/':
-				val = vallist.Pop().(byte) / val
+				val = vallist.Pop().(rune) / val
 			default:
 				fmt.Println("Wrong operation!")
 			}
-			vallist.Push(val)
+			vallist.Push(rune(val))
 		default:
-			vallist.Push(e)
+			vallist.Push(rune(e))
 		}
-		fmt.Println("---------------")
-		opslist.Print()
-		vallist.Print()
-		fmt.Println("---------------")
+		//fmt.Println("---------------")
+		//opslist.Print()
+		//vallist.Print()
+		//fmt.Println("---------------")
 	}
 
-	fmt.Printf("The result is : %s\n", string(val))
+	fmt.Printf("The result is : %d\n", val)
 }
