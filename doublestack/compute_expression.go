@@ -1,18 +1,19 @@
 package main
 
 import (
-	"github.com/vinefarer/golist"
-	"os"
 	"bufio"
 	"fmt"
+	"os"
+
+	"github.com/vinefarer/golist"
 )
 
 var (
 	inputReader *bufio.Reader
 	inputValue  []byte
-	err 		error
-	ops			rune
-	val    		byte
+	err         error
+	ops         rune
+	val         byte
 )
 
 func main() {
@@ -68,5 +69,5 @@ func main() {
 		fmt.Println("---------------")
 	}
 
-	fmt.Printf("The result is : %d\n", val)
+	fmt.Printf("The result is : %s\n", string(val))
 }
